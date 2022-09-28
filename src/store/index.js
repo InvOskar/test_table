@@ -9,7 +9,6 @@ export default createStore({
   getters: {
     getUsers: (state) => state.users,
     getFilter: (state) => state.filter,
-    getNextId: (state) => state.users[state.users.length - 1].id + 1,
   },
   mutations: {
     setFilter(state) {
@@ -47,7 +46,7 @@ export default createStore({
       localStorage.setItem("users", JSON.stringify([...state.users]));
     },
     addUser({ state }, user) {
-      const id = state.users[state.users.length - 1].id + 1;
+      const id = Math.max(...state.users.map((user) => user.id)) + 1;
       state.users.push({ id, ...user });
       localStorage.setItem("users", JSON.stringify([...state.users]));
     },
